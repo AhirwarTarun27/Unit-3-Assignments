@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width, initial-scale=1.0" />
+    <link rel="stylesheet" href="YouTube.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <title>Youtube</title>
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <div>
+          <img
+            height="px"
+            width="30px"
+            src="https://cdn.pixabay.com/photo/2021/02/16/06/00/youtube-logo-6019878_960_720.png"
+            alt=""
+          />
+          <div>
+            <p>YouTube</p>
+          </div>
+        </div>
+        <div class="searchBox">
+          <div>
+            <input type="text" id="search" />
+
+            <button onclick="searchVideos()">Search</button>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div id="leftBox"></div>
+
+      <div id="search_results"></div>
+    </main>
+  </body>
+</html>
+
+<script src="youtube.js"></script>

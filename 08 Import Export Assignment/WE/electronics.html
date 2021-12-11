@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/navbar.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="container"></div>
+    <div id="data"></div>
+  </body>
+</html>
+<script type="module">
+  import { getData, appendData } from "./scripts/showdata.js";
+
+  // you can change the navbar because we use default export and in the above we use destructuring so cant change name.
+  import navbar from "./components/navbar.js";
+
+  let container = document.getElementById("container");
+
+  container.innerHTML = navbar();
+
+  let data_div = document.getElementById("data");
+
+  let response = getData(
+    `https://fakestoreapi.com/products/category/electronics`
+  );
+
+  //just need to open the gift rap in the promise which is present in the shodata in json format.
+  response.then((res) => {
+    appendData(res, data_div);
+  });
+</script>

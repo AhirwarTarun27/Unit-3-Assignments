@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/navbar.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header></header>
+
+    <div id="rec"></div>
+  </body>
+</html>
+<script type="module">
+  import { getData, appendData } from "./scripts/foodData.js";
+
+  import navFunction from "./components/navbar.js";
+
+  let navbar = document.querySelector("header");
+
+  navbar.innerHTML = navFunction();
+
+  let mainDiv = document.getElementById("rec");
+
+  let ran = document.getElementById("randomRec");
+
+  ran.addEventListener("click", randomR);
+
+  async function newData(url) {
+    try {
+      let response = await fetch(url);
+
+      let data = await response.json();
+      randomR(data.meals[0]);
+    } catch (error) {
+      console.log("error:", error);
+    }
+  }
+
+  let random = await newData(
+    `https://www.themealdb.com/api/json/v1/1/random.php`
+  );
+
+  async function randomR({
+    strMealThumb,
+    strMeal,
+    strCategory,
+    strArea,
+    strInstructions,
+  }) {
+    let div = document.createElement("div");
+    div.setAttribute("class", "randomDiv");
+
+    let imgDiv = document.createElement("div");
+    div.setAttribute("class", "imgDiv");
+
+    // let inst = strInstructions;
+
+    imgDiv.addEventListener("click", () => {
+      description(strMeal);
+    });
+
+    function secBox() {
+      let secDiv = document.createElement("div");
+      div.setAttribute("id", "secDiv");
+
+      mainDiv.append(secDiv);
+    }
+
+    let img = document.createElement("img");
+    img.src = strMealThumb;
+
+    imgDiv.append(img);
+
+    let h3 = document.createElement("h3");
+    h3.innerText = strMeal;
+
+    let p1 = document.createElement("p");
+    p1.innerText = strCategory;
+
+    let p2 = document.createElement("p");
+    p2.innerText = strArea;
+
+    div.append(imgDiv, h3, p1, p2);
+    mainDiv.append(div);
+  }
+  async function description(name) {
+    console.log("name:", name);
+
+    const secRes = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`
+    );
+
+    const secData = await secRes.json();
+    // console.log("secData:", secData.meals[0]);
+    secDec(secData.meals[0]);
+  }
+
+  let body = document.querySelector("body");
+
+  let secDec = ({
+    strMealThumb,
+    strMeal,
+    strCategory,
+    strArea,
+    strInstructions,
+  }) => {
+    // console.log("input:", input);
+
+    let secBox = document.createElement("div");
+    secBox.setAttribute("class", "secBox");
+
+    let mainDiv = document.createElement("div");
+    mainDiv.setAttribute("class", "pageMain");
+
+    let div1 = document.createElement("div");
+    let img = document.createElement("img");
+    img.src = strMealThumb;
+    img.style.width = "100%";
+    img.style.height = "100%";
+
+    div1.appendChild(img);
+
+    let div2 = document.createElement("div");
+
+    let h1 = document.createElement("h1");
+    h1.innerText = strMeal;
+
+    let h3 = document.createElement("h3");
+    h3.innerText = `Category: ${strCategory}`;
+
+    let h3_2 = document.createElement("h3");
+    h3.innerText = `Area: ${strArea}`;
+
+    let p = document.createElement("div");
+    p.innerHTML = `<h3>Instructions: </h3> <p>${strInstructions}</p>`;
+
+    let remove = document.createElement("button");
+    remove.innerText = "Back";
+    remove.addEventListener("click", () => {
+      let rem = document.getElementsByClassName("secBox");
+      rem[0].remove();
+    });
+
+    div2.append(remove, h1, h3, h3_2, p);
+
+    mainDiv.append(div1, div2);
+    secBox.appendChild(mainDiv);
+    body.append(secBox);
+  };
+</script>

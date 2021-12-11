@@ -1,0 +1,132 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+header {
+  width: 100%;
+  padding: 3%;
+  display: flex;
+  justify-content: space-around;
+  border: 1px solid black;
+  background-color: coral;
+  text-align: center;
+  font-weight: bolder;
+  font-size: 18px;
+}
+header a {
+  text-decoration: none;
+  color: black;
+}
+
+header input {
+  padding: 5px;
+  border-radius: 4px;
+}
+
+main {
+  display: grid;
+  width: 95%;
+  margin: auto;
+  grid-template-columns: repeat(4, 20%);
+  gap: 5%;
+  margin-top: 20px;
+}
+
+img {
+  width: 100%;
+}
+
+button {
+  padding: 5px;
+  border-radius: 4px;
+}
+
+/* for receipe of day css */
+
+#rec {
+  position: relative;
+  width: 100%;
+  height: 60%;
+  margin: auto;
+  border: 1px solid red;
+}
+
+#rec img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 50px 50px 0px 0px;
+}
+
+.randomDiv {
+  width: fit-content;
+  height: fit-content;
+  border: 2px solid pink;
+  margin: auto;
+  border-radius: 50px;
+}
+.imgDiv {
+  width: 400px;
+  height: 50%;
+  margin: auto;
+  border-radius: 50px;
+  text-align: center;
+  letter-spacing: 1px;
+  font-weight: bolder;
+  background-color: violet;
+}
+
+/* for the padination page */
+
+body {
+  position: relative;
+  z-index: 1;
+}
+
+.secBox {
+  position: absolute;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.6);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  border: 1px solid red;
+}
+
+.pageMain {
+  width: 80%;
+  height: fit-content;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  color: seashell;
+  box-shadow: rgba(2, 2, 8, 1.5) 0px 7px 29px 0px;
+}
+
+.pageMain > div:nth-child(1) {
+  width: 300px;
+
+  height: 100%;
+}
+.pageMain > div:nth-child(1) > img {
+  border-radius: 20px;
+}
+
+.pageMain > div:nth-child(2) {
+  width: 65%;
+  height: fit-content;
+}
+
+.pageMain button {
+  float: right;
+}
+
+/* for latest recepies */
+

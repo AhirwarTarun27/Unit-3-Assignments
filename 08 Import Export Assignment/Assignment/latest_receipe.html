@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/navbar.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header></header>
+    <main></main>
+  </body>
+</html>
+<script type="module">
+  import { getData, appendData } from "./scripts/foodData.js";
+
+  import navFunction from "./components/navbar.js";
+
+  let navbar = document.querySelector("header");
+
+  navbar.innerHTML = navFunction();
+
+  let mainDiv = document.querySelector("main");
+
+  import { appendLatest } from "./scripts/foodData.js";
+
+  async function showData() {
+    try {
+      let response = await fetch(
+        `https://www.themealdb.com/api/json/v1/1/categories.php`
+      );
+
+      let newData = await response.json();
+      let main = document.querySelector("main");
+
+      appendLatest(newData.categories, main);
+    } catch (error) {
+      console.log("error:", error);
+    }
+  }
+  showData();
+</script>
