@@ -1,0 +1,28 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "image": "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YmlrZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+      "name": "Yamaha",
+      "price": "1500000"
+    },
+    {
+      "id": "4",
+      "image": "https://images.unsplash.com/photo-1524591652733-73fa1ae7b5ee?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8c3BvcnRzJTIwYmlrZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+      "name": "Harly Davension",
+      "price": "4000000"
+    },
+    {
+      "id": "3",
+      "image": "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c3BvcnRzJTIwYmlrZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+      "name": "New Splender",
+      "price": "6000000"
+    },
+    {
+      "id": "2",
+      "image": "https://images.unsplash.com/photo-1621713939155-e35df91a3262?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8c3BvcnRzJTIwYmlrZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+      "name": "New Bajaj",
+      "price": "500000"
+    }
+  ]
+}

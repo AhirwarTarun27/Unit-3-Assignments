@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>frontEnd</title>
+  </head>
+  <style>
+    input,
+    button {
+      margin-top: 10px;
+    }
+    #container {
+      display: flex;
+      /* border: 1px solid red; */
+      gap: 3%;
+      justify-content: space-between;
+    }
+    .firstBox {
+      width: 25%;
+      height: fit-content;
+      /* border: 1px solid black; */
+    }
+    .secBox {
+      width: 70%;
+      height: fit-content;
+      /* border: 1px solid yellow; */
+    }
+
+    #displayBox {
+      display: grid;
+      gap: 10px;
+      margin: auto;
+      justify-content: space-evenly;
+      grid-template-columns: repeat(3, 30%);
+    }
+    img {
+      width: 100%;
+    }
+  </style>
+  <body>
+    <div id="container">
+      <div class="firstBox">
+        <div>
+          <h1>Add Products</h1>
+          <input type="name" placeholder="id" id="id" />
+          <input type="text" placeholder="Enter image URL" id="img" />
+          <input type="name" placeholder="name" id="name" />
+          <input type="number" placeholder="price" id="price" />
+
+          <button onclick="addProducts()">Add Product</button>
+        </div>
+        <div>
+          <h1>Delete Product</h1>
+
+          <input type="text" id="delete_id" placeholder="Enter id to Delete" />
+          <button onclick="deleteProducts()">Delete Products</button>
+        </div>
+        <div>
+          <h1>Change Name</h1>
+
+          <input type="text" id="enterId" placeholder="Enter Id" />
+          <input type="name" id="enterName" placeholder="Enter name" />
+          <input type="number" id="enterPrice" placeholder="Enter Price" />
+
+          <button onclick="changeName()">Change Name</button>
+        </div>
+      </div>
+      <div class="secBox">
+        <div>
+          <button id="showBtn">Show-Product</button>
+        </div>
+        <div id="displayBox"></div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  async function addProducts() {
+    const data = {
+      id: document.getElementById("id").value,
+      image: document.getElementById("img").value,
+      name: document.getElementById("name").value,
+      price: document.getElementById("price").value,
+    };
+
+    //make a POST request
+
+    let response = await fetch("http://127.0.0.1:7000/api/products", {
+      method: "POST",
+
+      body: JSON.stringify(data),
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    let d = await response.json();
+    console.log("data:", d);
+  }
+
+  async function changeName() {
+    let id = document.getElementById("enterId").value;
+    console.log("id:", id);
+
+    const upData = {
+      name: document.getElementById("enterName").value,
+      price: document.getElementById("enterPrice").value,
+    };
+
+    //make a PUT request
+    let response = await fetch(`http://127.0.0.1:7000/api/products/${id}`, {
+      method: "PUT",
+
+      body: JSON.stringify(upData),
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    let nd = await response.json();
+    console.log("newData:", nd);
+  }
+
+  //Creating delete request
+  async function deleteProducts() {
+    const id = document.getElementById("delete_id").value;
+
+    let response = await fetch(`http://127.0.0.1:7000/api/products/${id}`, {
+      method: "DELETE",
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    let d = await response.json();
+    console.log("d:", d);
+  }
+
+  async function changeName() {
+    let id = document.getElementById("enterId").value;
+    console.log("id:", id);
+
+    const upData = {
+      name: document.getElementById("enterName").value,
+    };
+
+    //make a PUT request
+    let response = await fetch(`http://127.0.0.1:7000/api/products/${id}`, {
+      method: "PUT",
+
+      body: JSON.stringify(upData),
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    let nd = await response.json();
+    console.log("newData:", nd);
+  }
+
+  //Creating delete request
+  async function deleteProducts() {
+    const id = document.getElementById("delete_id").value;
+
+    let response = await fetch(`http://127.0.0.1:7000/api/products/${id}`, {
+      method: "DELETE",
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    let d = await response.json();
+    console.log("d:", d);
+  }
+
+  // function for displaying the data in the display box
+  let count = 0;
+  let showBtn = document.getElementById("showBtn");
+  showBtn.addEventListener("click", getData);
+  async function getData() {
+    try {
+      let res = await fetch(`http://127.0.0.1:7000/api/products`);
+
+      let response = await res.json();
+      // console.log("response:", response[0]);
+      showData(response);
+      count++;
+      console.log("count:", count);
+
+      if (count == 1) {
+        showBtn.removeEventListener("click", getData);
+        count = 0;
+      }
+    } catch (error) {
+      console.log("error:", error);
+    }
+  }
+
+  let mainDiv = document.getElementById("displayBox");
+
+  function showData(data) {
+    data.forEach(({ image, id, name, price }) => {
+      let box = document.createElement("div");
+
+      let img = document.createElement("img");
+      img.src = image;
+
+      let h3 = document.createElement("h3");
+      h3.innerHTML = `ID number :-${id}`;
+
+      let h2 = document.createElement("h2");
+      h2.innerHTML = name;
+
+      let p = document.createElement("h2");
+      p.innerHTML = `Rs.${price}/-`;
+
+      box.append(img, h3, h2, p);
+
+      mainDiv.append(box);
+    });
+  }
+</script>
