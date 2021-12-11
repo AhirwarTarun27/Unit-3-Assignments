@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  //made a object litral for grand-parents which is same for the decendents
+  const grandParents = {
+    skinColor: "light brown",
+    height: "more than average",
+    sugar: "having sugar",
+  };
+
+  //creating an object for parents having inheritance of grandParents as a prototype
+  const parents = Object.create(grandParents);
+
+  parents.hairColor = "light black";
+  parents.hairtype = "curly";
+
+  //creating function having same properties of both parents and son using this method.
+  function sameParentsSon(htype, btype) {
+    this.hairtype = htype;
+    this.bodyType = btype;
+  }
+
+  //using constructors I call the the sameParentsSon function's elements
+  function sonDetail(htype, btype) {
+    sameParentsSon.call(this, htype, btype);
+
+    this.intelligence = "smart";
+  }
+
+  const children = Object.setPrototypeOf(
+    new sonDetail("black", "fit"),
+    parents
+  );
+  console.log("children:", children);
+</script>

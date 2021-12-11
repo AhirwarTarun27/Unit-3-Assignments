@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+
+<script>
+  let array = new NewArray(1, 2, 3);
+  console.log("array:", Object.values(array));
+
+  function NewArray() {
+    //configuring for length property
+
+    Object.defineProperty(this, "length", {
+      writable: true,
+      enumerable: false,
+    });
+
+    for (let i = 0; i < arguments.length; i++) {
+      this[i] = arguments[i];
+    }
+    this.length = arguments.length;
+  }
+
+  //Making own push operation
+  NewArray.prototype.newPush = function (x) {
+    let index = this.length;
+    this[index] = x;
+  };
+
+  let arr1 = new NewArray("tarun", "rahul", "vishal");
+
+  arr1.newPush("varun");
+  // console.log("arr:", Object.values(arr1));
+
+  //Making reverse array function
+
+  NewArray.prototype.tReverse = function () {
+    let arr = [];
+    for (let i = this.length - 1; i >= 0; i--) {
+      arr.push(this[i]);
+    }
+    console.log(arr);
+  };
+
+  let arr2 = new NewArray(1, 2, 3, 4);
+
+  arr2.tReverse();
+
+  //adding method for returning first element
+
+  NewArray.prototype.tFirstEle = function () {
+    console.log(this[0]);
+  };
+
+  let firstVar = new NewArray(10, 2, 3, 4);
+  firstVar.tFirstEle();
+
+  // printing in array format
+
+  NewArray.prototype.returnArr = function () {
+    console.log(Object.values(this));
+  };
+
+  let norArr = new NewArray(3, 4, 5, 6);
+
+  norArr.returnArr();
+</script>
