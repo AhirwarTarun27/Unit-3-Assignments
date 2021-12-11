@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 1</title>
+  </head>
+  <body>
+    <h1>Vaccination System</h1>
+    <input type="text" id="name" />
+
+    <button onclick="register()">Register</button>
+    <div>
+      <h2>No of People in the queue are :-</h2>
+      <div id="count"></div>
+    </div>
+  </body>
+</html>
+<script>
+  let queue = [
+    "vinay",
+    "pratik",
+    "Sachin",
+    "vishal",
+    "pankaj",
+    "naman",
+    "rahul",
+  ];
+  let count = queue.length;
+  document.getElementById("count").innerHTML = `<h1>${count}</h1>`;
+
+  function register() {
+    let name = document.getElementById("name").value;
+
+    let message = `${name} your registration is successfull. Please wait for your turn`;
+
+    alert(message);
+
+    let mypromise = new Promise(function (resolve, reject) {
+      //your turns come after other turns get over in the array
+
+      setInterval(function () {
+        if (queue.length == 0) {
+          reject(`vaccine out of stock, visit tomorrow`);
+
+          //shouting your name as a return value
+        }
+      }, 2000);
+    });
+
+    mypromise.catch(function (res) {
+      alert(res);
+    });
+
+    //starting vaccination
+    function startVaccination() {
+      queue.shift();
+      count--;
+      console.log("queue:", queue);
+      if (queue.length === 0) {
+        clearInterval(id);
+      }
+      let cBox = document.getElementById("count");
+      cBox.innerHTML = `<h1>${count}</h1>`;
+    }
+
+    let id = setInterval(startVaccination, 3000);
+  }
+</script>

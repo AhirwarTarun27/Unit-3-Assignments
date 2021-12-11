@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tatkal Ticket</title>
+  </head>
+  <body>
+    <h1>Build Ticket Notifier System</h1>
+
+    <button onclick="checkAvailibity()">Check-Availibity</button>
+
+    <table>
+      <tr>
+        <td><h2>No of passengers in Banglore to Goa train:</h2></td>
+        <td id="Bcount"></td>
+      </tr>
+      <tr>
+        <td><h2>No of passengers in Mumbai to Goa train:</h2></td>
+        <td id="Mcount"></td>
+      </tr>
+      <tr>
+        <td><h2>No of passengers in Pune to Goa train:</h2></td>
+        <td id="Pcount"></td>
+      </tr>
+    </table>
+  </body>
+</html>
+<script>
+  let BtG = [
+    "messi",
+    "Kl Rahul",
+    "Mr.Bean",
+    "Dipika",
+    "Sachin",
+    "vishal",
+    "pankaj",
+    "naman",
+    "rahul",
+  ];
+  let MtG = [
+    "messi",
+    "Kl Rahul",
+    "Mr.Bean",
+    "Dipika",
+    "Sachin",
+    "vishal",
+    "pankaj",
+    "naman",
+    "rahul",
+  ];
+  let PtG = [
+    "messi",
+    "Kl Rahul",
+    "Mr.Bean",
+    "Dipika",
+    "Sachin",
+    "vishal",
+    "pankaj",
+    "naman",
+    "rahul",
+  ];
+
+  async function checkAvailibity() {
+    let mypromise = new Promise(function (resolve, reject) {
+      setInterval(function () {
+        if (BtG.length === 4) {
+          resolve(`BtG 4 seats are availiable`);
+          clearInterval(interval);
+        } else if (MtG.length === 4) {
+          resolve(`MtG 4 seats are availiable`);
+          clearInterval(interval);
+        } else if (PtG.length === 4) {
+          resolve(`PtG 4 seats are availiable`);
+          clearInterval(interval);
+        }
+      }, 1000);
+    });
+
+    let result = await mypromise;
+    if (result == "BtG 4 seats are availiable") {
+      alert(
+        "4 Seats are available in Banglore to Goa: redirected to the booking"
+      );
+      window.location.href = "Booking.html";
+    } else if (result == "MtG 4 seats are availiable") {
+      alert(
+        "4 Seats are available in Mumbai to Goa: redirected to the booking"
+      );
+      window.location.href = "Booking.html";
+    } else if (result == "PtG 4 seats are availiable") {
+      alert("4 Seats are available in Pune to Goa: redirected to the booking");
+      window.location.href = "Booking.html";
+    }
+  }
+  let count1 = BtG.length;
+  let count2 = MtG.length;
+  let count3 = PtG.length;
+
+  function cancelTicket() {
+    let CS1 = Math.random() * 5;
+    let CS2 = Math.random() * 5;
+    let CS3 = Math.random() * 5;
+
+    setTimeout(function () {
+      BtG.pop();
+      count1--;
+    }, CS1 * 1000);
+    setTimeout(function () {
+      MtG.pop();
+      count2--;
+    }, CS2 * 1000);
+    setTimeout(function () {
+      PtG.pop();
+      count3--;
+    }, CS3 * 1000);
+
+    console.log(BtG, PtG, MtG);
+    let Bcount = document.getElementById("Bcount");
+    Bcount.innerHTML = `<h1>${count1}</h1>`;
+    let Mcount = document.getElementById("Mcount");
+    Mcount.innerHTML = `<h1>${count2}</h1>`;
+    let Pcount = document.getElementById("Pcount");
+    Pcount.innerHTML = `<h1>${count3}</h1>`;
+  }
+
+  let interval = setInterval(cancelTicket, 3000);
+</script>
