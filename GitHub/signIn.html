@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign-In</title>
+  </head>
+  <style>
+    body {
+      margin: 0px;
+    }
+    #header {
+      display: flex;
+      flex-wrap: wrap;
+      background-color: black;
+      color: white;
+      justify-content: space-around;
+    }
+    a {
+      text-decoration: none;
+      color: white;
+    }
+    #logo {
+      width: 5%;
+      text-align: right;
+    }
+    #logo img {
+      width: 30%;
+      border-radius: 80%;
+      padding: 9px;
+    }
+    #profile img {
+      border-radius: 80%;
+      width: 50%;
+      height: 35px;
+      padding-top: 7%;
+    }
+    #search {
+      width: 10%;
+      padding: 12px;
+    }
+    ul {
+      padding-left: 35px;
+    }
+
+    #list li {
+      display: inline;
+      margin-right: 2%;
+    }
+    #options {
+      width: 50%;
+    }
+    #profile {
+      width: 300px;
+      display: flex;
+      float: right;
+
+      gap: 30px;
+    }
+
+    #profile img {
+      width: 40px;
+      margin-left: 30%;
+    }
+
+    #main {
+      padding: 3%;
+    }
+
+    .sign-in {
+      width: fit-content;
+      height: fit-content;
+      position: absolute;
+      margin: auto;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  </style>
+  <body>
+    <div id="header"></div>
+    <div class="sign-in">
+      <table>
+        <tr>
+          <td>Username:</td>
+          <td>
+            <input type="text" id="login-username" placeholder="username" />
+          </td>
+        </tr>
+        <tr>
+          <td>Password :</td>
+          <td>
+            <input type="number" id="login-password" placeholder="Password" />
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><button id="btn">SignIn</button></td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
+<script type="module">
+  import navbar from "./components/navbar.js";
+
+  let header = document.getElementById("header");
+  header.innerHTML = navbar();
+
+  let btn = document.getElementById("btn");
+  btn.onclick = signin;
+
+  async function signin(e) {
+    e.preventDefault();
+
+    let data = {
+      username: document.getElementById("login-username").value,
+      password: document.getElementById("login-password").value,
+    };
+
+    data = JSON.stringify(data);
+
+    let api = `https://masai-api-mocker.herokuapp.com/auth/login`;
+
+    let response = await fetch(api, {
+      method: "POST",
+      body: data,
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    let res = await response.json();
+    console.log("data:", res);
+
+    let username = document.getElementById("login-username").value;
+
+    getProfile(username, data.token);
+  }
+
+  async function getProfile(username, token) {
+    let api = `https://masai-api-mocker.herokuapp.com/user/${username}`;
+
+    let response = await fetch(api, {
+      headers: {
+        "Content-Type": "application/json",
+
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    let newGet = await response.json();
+    console.log("data:", newGet);
+  }
+</script>

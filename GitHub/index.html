@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Document</title>
+  </head>
+
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="styles/navbar.css" />
+      <title>Document</title>
+    </head>
+    <style>
+      table,
+      tr,
+      td {
+        border: 1px solid black;
+        padding: 10px;
+        margin: 5px;
+      }
+      .linkBg:hover {
+        background-color: green;
+      }
+    </style>
+
+    <body>
+      <div id="header"></div>
+      <div id="main">
+        <!-- if you give onClick in the button it will not work in module type script -->
+        <button id="get-repo-btn">Get User Repos</button>
+      </div>
+      <div id="repoBox">
+        <table>
+          <thead>
+            <tr>
+              <th>Number</th>
+              <th>Project Name</th>
+              <th>Discription</th>
+              <th>Project URL</th>
+            </tr>
+          </thead>
+          <!-- <table id="Tdata"></table> -->
+          <tbody></tbody>
+        </table>
+      </div>
+    </body>
+  </html>
+</html>
+<script type="module">
+  import navbar from "./components/navbar.js";
+
+  import getData from "./scripts/getData.js";
+
+  let response;
+
+  let navbar_container = document.getElementById("header");
+
+  navbar_container.innerHTML = navbar();
+
+  let search_box = document.getElementById("search-input");
+
+  search_box.addEventListener("keypress", makeAPICall);
+
+  async function makeAPICall(e) {
+    //making call only when the enter key is pressed
+    if (e.key === "Enter") {
+      let user = search_box.value;
+
+      //make fetch call
+
+      let img = document.getElementById("profile-img");
+
+      response = await getData(user);
+
+      img.src = response.avatar_url;
+      console.log("response:", response);
+    }
+  }
+
+  let btn = document.getElementById("get-repo-btn");
+
+  btn.addEventListener("click", getUserRepos);
+
+  async function getUserRepos() {
+    let res = await fetch(response.repos_url);
+
+    let data = await res.json();
+    // console.log("data:", data);
+    listRepo(data);
+  }
+
+  let repoBox = document.querySelector("tbody");
+  let count = 1;
+
+  const listRepo = (data) => {
+    repoBox.innerHTML = null;
+    data.forEach(({ name, description, html_url }) => {
+      let tr1 = document.createElement("tr");
+
+      let td1 = document.createElement("td");
+      td1.innerHTML = count++;
+
+      let td2 = document.createElement("td");
+      td2.innerHTML = name;
+
+      let td3 = document.createElement("td");
+      td3.innerHTML = description;
+
+      let td4 = document.createElement("td");
+      td4.setAttribute("class", "linkBg");
+      td4.innerHTML = html_url;
+      td4.style.cursor = "pointer";
+
+      td4.onclick = () => {
+        let url = html_url;
+        window.open(url, "_blank");
+      };
+
+      tr1.append(td1, td2, td3, td4);
+
+      repoBox.append(tr1);
+    });
+  };
+
+  //addEventListner
+</script>

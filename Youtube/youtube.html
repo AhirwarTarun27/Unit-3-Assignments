@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width, initial-scale=1.0" />
+    <link rel="stylesheet" href="YouTube.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <title>Youtube</title>
+  </head>
+  <body>
+    <header></header>
+    <hr />
+    <main>
+      <div id="leftBox"></div>
+
+      <div id="search_results"></div>
+    </main>
+  </body>
+</html>
+
+<script type="module">
+  //for navBar
+  import navFunction from "./components/navbar.js";
+
+  let header = document.querySelector("header");
+
+  header.innerHTML = navFunction();
+
+  let btn = document.getElementById("searchVideos");
+
+  btn.addEventListener("click", searchVideos);
+
+  let api = "AIzaSyB9 - IforDQgF7hBQ - jFWCJmwQg5o5YrSng";
+
+  let search_results = document.getElementById("search_results");
+
+  //https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=tesla&key=[YOUR_API_KEY]
+
+  async function popularVideos() {
+    try {
+      let res = await fetch(
+        `https://youtube.googleapis.com/youtube/v3/videos?part=contentDetails&chart=mostPopular&regionCode=IN&maxResults=25&key=AIzaSyB9 - IforDQgF7hBQ - jFWCJmwQg5o5YrSng`
+      );
+      let data = await res.json();
+      // console.log("data:", data.items);
+
+      popularAppend(data.items);
+    } catch (error) {
+      console.log("error:", error);
+    }
+  }
+  popularVideos();
+  const popularAppend = (data) => {
+    data.forEach(({ id }) => {
+      console.log("id:", id);
+
+      let mainDiv = document.createElement("div");
+      mainDiv.setAttribute("id", "popularDiv");
+
+      let iframe = document.createElement("iframe");
+      iframe.src = `https://www.youtube.com/embed/${id}`;
+      iframe.width = "100%";
+      iframe.height = "100%";
+      iframe.setAttribute("allowfullscreen", true);
+
+      mainDiv.append(iframe);
+      search_results.append(mainDiv);
+    });
+  };
+
+  async function searchVideos() {
+    try {
+      let inp = document.getElementById("search").value;
+
+      let response = await fetch(
+        `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${inp}&key=${api}&type=video`
+      );
+
+      let data = await response.json();
+
+      let array_of_videos = data.items;
+
+      appendVideos(array_of_videos);
+    } catch (err) {
+      console.log("err:", err);
+    }
+  }
+
+  function appendVideos(arr) {
+    search_results.innerHTML = null;
+    arr.forEach(({ snippet, id: { videoId } }) => {
+      let div = document.createElement("div");
+      div.setAttribute("id", "searchBox");
+
+      let url = snippet.thumbnails.medium.url;
+
+      let img = document.createElement("img");
+
+      img.src = url;
+
+      let title = snippet.title;
+
+      let h4 = document.createElement("h4");
+
+      h4.innerText = title;
+
+      let video_data = {
+        snippet,
+        videoId,
+      };
+
+      //another way to click a box
+      div.onclick = () => {
+        showVideo(video_data);
+      };
+
+      // let iframe = document.createElement("iframe");
+      // iframe.src = `https://www.youtube.com/embed/${videoId}`;
+      // iframe.width = "460px";
+      // iframe.height = "260px";
+
+      div.append(img, h4);
+
+      search_results.append(div);
+    });
+  }
+
+  //adding the video data
+  const showVideo = (video_data) => {
+    //now lets store this to localStorage
+
+    localStorage.setItem("clicked_video", JSON.stringify(video_data));
+
+    window.open("video.html");
+  };
+
+  //action = click on a video
+  //expectation - play the video on new page;
+</script>

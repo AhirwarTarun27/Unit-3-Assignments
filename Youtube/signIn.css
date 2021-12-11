@@ -1,0 +1,58 @@
+body {
+  background-color: #181818;
+  color: aliceblue;
+  font-family: "Roboto", Arial, sans-serif;
+}
+
+.sign-in {
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.sign-up {
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.logo {
+  width: 100%;
+  height: 50px;
+  font-weight: bolder;
+  display: flex;
+  align-items: center;
+}
+
+.logo > div:nth-child(1) {
+  display: flex;
+  width: 20%;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.logo > div:nth-child(3) {
+  display: flex;
+  gap: 50px;
+}
+.logo a {
+  text-decoration: none;
+  color: aliceblue;
+}
+
+.searchBox {
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
