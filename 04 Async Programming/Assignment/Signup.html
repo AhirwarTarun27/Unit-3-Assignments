@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign-up</title>
+  </head>
+  <style>
+    header {
+      margin: 20px auto;
+
+      width: 95%;
+      height: 80;
+      display: flex;
+      justify-content: right;
+      border: 1px solid black;
+    }
+    header > div {
+      margin-right: 20px;
+      margin-left: 20px;
+      cursor: pointer;
+    }
+    a {
+      text-decoration: none;
+      color: black;
+      font-weight: bolder;
+    }
+  </style>
+  <body>
+    <header>
+      <div class="home">
+        <a href="Home.html"><p>Home</p></a>
+      </div>
+      <div class="login">
+        <a href="Login.html"><p>Login</p></a>
+      </div>
+      <div class="signup">
+        <a href="Signup.html"><p>Signup</p></a>
+      </div>
+    </header>
+    <main>
+      <form id="form">
+        <table>
+          <tr>
+            <td><label for="name">Name: </label></td>
+            <td><input type="text" id="name" /></td>
+          </tr>
+          <tr>
+            <td><label for="number">Contact No: </label></td>
+            <td>
+              <input type="number" id="number" />
+            </td>
+          </tr>
+          <tr>
+            <td><label for="email">Email: </label></td>
+            <td><input type="email" id="email" /></td>
+          </tr>
+          <tr>
+            <td><label for="pass">Password:</label></td>
+            <td><input type="password" id="pass" /></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><input type="submit" onclick="storeData(event)" /></td>
+          </tr>
+        </table>
+      </form>
+    </main>
+  </body>
+</html>
+
+<script>
+  function storeData(e) {
+    e.preventDefault();
+
+    let name = document.getElementById("name").value;
+    let num = document.getElementById("number").value;
+    let email = document.getElementById("email").value;
+    let pass = document.getElementById("pass").value;
+
+    if (name == "" || num == "" || email == "" || pass == "") {
+      alert("Input cant be empty");
+    }
+
+    let arrData = JSON.parse(localStorage.getItem("detailInform")) || [];
+
+    let userData = {
+      name: name,
+      number: num,
+      email: email,
+      pass: pass,
+    };
+
+    arrData.push(userData);
+
+    localStorage.setItem("detailInform", JSON.stringify(arrData));
+  }
+</script>

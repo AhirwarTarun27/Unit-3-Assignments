@@ -1,0 +1,56 @@
+header {
+  margin: 20px auto;
+
+  width: 95%;
+  height: 80;
+  display: flex;
+  justify-content: right;
+  border: 1px solid black;
+}
+header > div {
+  margin-right: 20px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+a {
+  text-decoration: none;
+  color: black;
+  font-weight: bolder;
+}
+#slideBox {
+  width: 95%;
+  margin: auto;
+  /* border: 1px solid red; */
+  margin-top: 20px;
+  height: 300px;
+}
+img {
+  width: 100%;
+  height: 100%;
+}
+
+/* css for movie box */
+
+#movieContain {
+  width: 95%;
+  margin: auto;
+  margin-top: 10px;
+  height: fit-content;
+  /* border: 1px solid red; */
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 60px;
+}
+
+#movieCard {
+  width: 100%;
+  margin: auto;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+  border-radius: 20px;
+  margin-top: 20px;
+}
+
+.imgBox {
+  height: 300px;
+  border-radius: 20px;
+}

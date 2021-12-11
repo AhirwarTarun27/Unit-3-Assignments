@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+  </head>
+  <style>
+    header {
+      margin: 20px auto;
+
+      width: 95%;
+      height: 80;
+      display: flex;
+      justify-content: right;
+      border: 1px solid black;
+    }
+    header > div {
+      margin-right: 20px;
+      margin-left: 20px;
+      cursor: pointer;
+    }
+    a {
+      text-decoration: none;
+      color: black;
+      font-weight: bolder;
+    }
+  </style>
+  <body>
+    <header>
+      <div class="home">
+        <a href="Home.html"><p>Home</p></a>
+      </div>
+      <div class="login">
+        <a href="Login.html"><p>Login</p></a>
+      </div>
+      <div class="signup">
+        <a href="Signup.html"><p>Signup</p></a>
+      </div>
+    </header>
+    <main>
+      <form id="form">
+        <tr>
+          <td><label for="email">Email: </label></td>
+          <td><input type="email" id="email" /></td>
+        </tr>
+        <tr>
+          <td><label for="pass">Password:</label></td>
+          <td><input type="password" id="pass" /></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><input type="submit" onclick="enter(event)" /></td>
+        </tr>
+      </form>
+    </main>
+  </body>
+</html>
+<script>
+  function enter(e) {
+    e.preventDefault();
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("pass").value;
+
+    let regUser = JSON.parse(localStorage.getItem("detailInform"));
+
+    regUser.forEach(function (data) {
+      if (email !== data.email || password !== data.pass) {
+        alert("invalid Credentials");
+      } else if (email === data.email && password === data.pass) {
+        window.location.href = "Home.html";
+      }
+    });
+  }
+</script>

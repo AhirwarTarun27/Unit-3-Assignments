@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" id="url" />
+    <button onclick="storeImages()">Submit image URL</button>
+    <button onclick="gotoSlideshow()">Watch Slideshow</button>
+
+    <div id="images"></div>
+  </body>
+</html>
+
+<script>
+  function gotoSlideshow() {
+    window.location.href = "slideshow.html";
+  }
+
+  function storeImages() {
+    var image = document.getElementById("url").value;
+
+    var images = JSON.parse(localStorage.getItem("images")) || [];
+
+    images.push(image);
+
+    localStorage.setItem("images", JSON.stringify(images));
+    document.getElementById("url").value = " ";
+  }
+</script>
