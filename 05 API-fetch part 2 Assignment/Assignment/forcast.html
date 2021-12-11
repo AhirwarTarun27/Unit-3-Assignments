@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/6b36d24ab1.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Document</title>
+  </head>
+  <style>
+    body {
+      background-color: #ebebeb;
+    }
+    #forcast {
+      display: flex;
+      width: 90%;
+      margin: auto;
+      margin-top: 30vh;
+      justify-content: space-evenly;
+      gap: 20px;
+    }
+
+    #forcast > div {
+      width: 200px;
+      height: fit-content;
+      text-align: center;
+      background-color: rgb(247, 213, 183);
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+
+    #forcast > div > p {
+      margin-top: 0px;
+    }
+
+    p {
+      font-size: 25px;
+      font-weight: bolder;
+    }
+
+    #forcast > div > div > p {
+      margin-top: -20px;
+    }
+    i {
+      font-size: 60px;
+      text-align: center;
+      margin-bottom: 60px;
+    }
+  </style>
+  <body>
+    <div id="forcast">
+      <div>
+        <p>Thu</p>
+        <br />
+        <i class="fas fa-sun"></i><br />
+        <div id="one"></div>
+      </div>
+      <div>
+        <p>Fri</p>
+        <br />
+        <i class="fas fa-sun"></i><br />
+        <div id="two"></div>
+      </div>
+      <div>
+        <p>Sat</p>
+        <br />
+        <i class="fas fa-cloud-sun"></i><br />
+        <div id="three"></div>
+      </div>
+      <div>
+        <p>Sun</p>
+        <br />
+        <i class="fas fa-cloud-sun"></i><br />
+        <div id="four"></div>
+      </div>
+      <div>
+        <p>Mon</p>
+        <br />
+        <i class="fas fa-cloud"></i><br />
+        <div id="five"></div>
+      </div>
+      <div>
+        <p>Tue</p>
+        <br />
+        <i class="fas fa-cloud"></i><br />
+        <div id="six"></div>
+      </div>
+      <div>
+        <p>Wed</p>
+        <br />
+        <i class="fas fa-cloud-showers-heavy"></i><br />
+        <div id="seven"></div>
+      </div>
+    </div>
+  </body>
+</html>
+<script src="forcast.js"></script>

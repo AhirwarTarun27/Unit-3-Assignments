@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debouncing Synatx</title>
+    <style>
+        #movies {
+            border: 1px solid black;
+            width: 300px;
+            height: 300px;
+            overflow: scroll;
+        }
+
+        #movie {
+            width: 300px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Here we debounce become our prior function and all the fuctions depends upon this so we will execute this fuction in "oninput" event listener -->
+    <input oninput="debounce(main, 1000)" type="text" id="movie" placeholder="Enter movie Name">
+    <!-- inside debounce function we are passing our "main function" as a parameter along with buffer/delay time -->
+    <div id="movies"></div>
+
+</body>
+
+</html>
+
+<script>
+
+    let movies = document.getElementById('movies');
+
+    // Here we are declaring the timerId globally so that we can clear the previous timerId without gettig any error
+    var timerId;
+
+    //Search Movies
+    async function searchMovies(movie_name) {
+
+        //Try will try to fetch the data if there will be some error then catch function will run
+        try {
+            let response = await fetch(`http://www.omdbapi.com/?s=${movie_name}&apikey=7bddce0a`)
+            //Go to OMDB api website to check the keywords used in api, like "s" is used for search, "t" is used for title search etc.
+
+            let data = await response.json();
+
+            data = data.Search;
+
+            return data;
+        }
+
+        //catch will show us the error during fetch if there will be any 
+        catch (error) {
+            //we use try & catch in async await syntax to catch error if any
+            console.log(error);
+        }
+    }
+
+
+    //Append Movies Function
+    function appendMovies(data) {
+
+        //Here we are removing the inner HTML tags from the main div so that for every search new result will be shown
+        movies.innerHTML = null;
+
+        //If the fetch data will be undefined (if we make wrong request) then it will come out from this function
+        if (data === undefined) {
+            return false;
+        }
+
+        //Here we are running forEach loop on fetched data to get the title of movies, we use ES6 syntax 
+        data.forEach(({ Title }) => {
+
+            let p = document.createElement('p');
+            p.textContent = Title;
+
+            movies.append(p);
+
+        });
+    }
+
+    //Instead of calling function inside function, we made a main function and here we are getting the value of input, passing it for searchMovies(name) function
+    async function main() {
+
+        //Here we use oninput="function_name()" event Listener inside input tag so that whatever we will type inside inputbox, it will take it and perform the given operation
+        let name = document.getElementById('movie').value;
+
+        //Here for optimization, we added a condition that if input length is smaller then 3 then it will not run & return false i.e. come out from the function
+        if (name.length < 3) {
+            return false;
+        }
+
+        //Here searchMovies(name)  function will take some time t execute, that means its a promise, so we use async await, and put it infrom of a variable, so this function will return the fetched data, so we add "return data" inside that function (line no. 47)
+        let moviesData = await searchMovies(name);
+        console.log('moviesData:', moviesData)
+
+        //Now we are calling appendMovies(moviesData) function and passing moviesData as a paramenter for appending movies title in search div
+        appendMovies(moviesData);
+    }
+
+
+    //Debounce Function
+
+    // for "avengers" movie search, steps are as follows
+    // ave : debounce => setTimeout => main() => searchMovies("ave") 
+    // aven : clear pervious timeout => debounce => setTimeout => main() => searchMovies("aven") 
+    // aveng : clear pervious timeout => debounce => setTimeout => main() => searchMovies("aveng")....till avengers
+    function debounce(mainFunction, delay) {
+
+        // Here we use "if condition" because for first alphabet (eg. for avengers its 'a') in search, there is no timerId present, so to avoid error "if condition" will check that if a previous timerId exist or not, if yes then it will clear otherwise this code will not run
+        if (timerId) {
+            // Here if user call "debounce()" again before 1 sec (type new alphabet before 1 sec) then this will clear the previous timer (remove the previous fetch request before it fetch data) and save the overload of fetch request on server
+            clearTimeout(timerId);
+        }
+
+        // Why we declare timerId globally (line 38), not here?
+        // Because we are clearing previous timerId on every call of debounce function & "clearTimeout(timerId)" code is present before the "setTimeout" code so that it will clear the previous timer and then set new timer (delay time is 1 sec) that's we are declaring timerId variable globally so that it will not through any error
+        timerId = setTimeout(() => {
+
+            // Here "mainFunction" is our argument and we added these barckets () at the end to make it a function so that we can pass our main() function here as an argument along with delay time
+            // mainfunction() = main()
+            mainFunction();
+
+        }, delay);
+    }
+
+</script>

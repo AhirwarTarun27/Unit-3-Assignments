@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <style>
+    input {
+      width: 200px;
+    }
+
+    #movies {
+      height: 200px;
+      width: 206px;
+
+      border: solid 1px black;
+      border-top: none;
+      overflow: scroll;
+    }
+  </style>
+  <body>
+    <input oninput="debounce(displayMovies,1000)" type="text" id="query" />
+    <div id="movies"></div>
+  </body>
+</html>
+
+<script>
+  let movies_div = document.getElementById("movies");
+
+  let bomb;
+
+  async function searchMovies() {
+    try {
+      const apikey = "a3756eaf";
+      let url = "http://www.omdbapi.com/?s=";
+
+      let name = document.getElementById("query").value;
+
+      let response = await fetch(
+        `http://www.omdbapi.com/?s=${name}&apikey=${apikey}`
+      );
+
+      let data = await response.json();
+      // return data.Search;
+      console.log("data:", data);
+    } catch (err) {
+      console.log("err:", err);
+    }
+  }
+
+  displayMovies();
+
+  async function displayMovies() {
+    console.log("fired after 3 seconds");
+
+    movies_div.innerHTML = null;
+    let movie_data = await searchMovies();
+
+    if (movie_data === undefined) {
+      return false;
+    }
+
+    console.log("movie_data:", movie_data);
+
+    movie_data.forEach(function (movie) {
+      let p = document.createElement("p");
+
+      p.innerText = movie.Title;
+
+      movies_div.append(p);
+    });
+  }
+
+  function debounce(func, delay) {
+    // function == displayMovies
+    //fetch(a)
+    //fetch(av)
+
+    clearTimeout(bomb);
+    bomb = setTimeout(function () {
+      func();
+    }, delay);
+  }
+</script>
