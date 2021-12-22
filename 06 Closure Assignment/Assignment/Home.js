@@ -98,8 +98,6 @@ async function listMovies() {
 
 //function for clicking the movie name in the listmovies function
 
-const appendData = (data) => {};
-
 function debounce(func, delay) {
   let name = document.getElementById("search").value;
   console.log("name:", name);
